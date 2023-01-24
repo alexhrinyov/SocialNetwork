@@ -85,6 +85,17 @@ namespace SocialNetwork
 
                                                 break;
                                             }
+                                        case "4":
+                                            {
+                                                Console.WriteLine("Введите email получателя: ");
+                                                string R_email = Console.ReadLine();
+                                                Console.WriteLine("Введите сообщение: ");
+                                                string messageContent = Console.ReadLine();
+                                                var message = new Message();
+                                                break;
+                                            }
+
+
                                     }
                                 }
 
