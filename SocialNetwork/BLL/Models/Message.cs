@@ -10,22 +10,18 @@ namespace SocialNetwork.BLL.Models
 {
     public class Message
     {
-        
-        public int id { get; set; }
-        public string content { get; set; }
-        public int sender_id { get; set; }
-        public int recipient_id { get; set; }
-        public string recipient_email { get; set; }
+        public int Id { get; }
+        public string Content { get; }
+        public string SenderEmail { get; }
+        public string RecipientEmail { get; }
 
-        public Message(string content, string recepient_email, User user)
+        public Message(int id, string content, string senderEmail, string recipientEmail)
         {
-            
-            this.content = content;
-            this.sender_id = user.Id;
-            UserRepository userRepository = new UserRepository();
-            UserEntity Recepient = userRepository.FindByEmail(recepient_email);
-            this.recipient_id = Recepient.id;
-            this.recipient_email = recepient_email;
+            this.Id = id;
+            this.Content = content;
+            this.SenderEmail = senderEmail;
+            this.RecipientEmail = recipientEmail;
         }
+
     }
 }
