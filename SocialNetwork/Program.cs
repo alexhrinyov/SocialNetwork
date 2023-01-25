@@ -1,12 +1,18 @@
 ﻿using SocialNetwork.BLL.Services;
 using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Exceptions;
+using SocialNetwork.DAL.Repositories;
 
 namespace SocialNetwork
 {
     internal class Program
     {
         public static UserService userService = new UserService();
+        public static MessageService messageService = new MessageService();
+        // Юзер, который входит в симтему
+        public static User user;
+        // Получатель сообщения
+        public static User Recepient;
         static void Main(string[] args)
         {
 
@@ -29,7 +35,7 @@ namespace SocialNetwork
 
                             try
                             {
-                                User user = userService.Authenticate(authenticationData);
+                                user = userService.Authenticate(authenticationData);
 
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Вы успешно вошли в социальную сеть! Добро пожаловать {0}", user.FirstName);
@@ -87,11 +93,35 @@ namespace SocialNetwork
                                             }
                                         case "4":
                                             {
-                                                Console.WriteLine("Введите email получателя: ");
-                                                string R_email = Console.ReadLine();
-                                                Console.WriteLine("Введите сообщение: ");
-                                                string messageContent = Console.ReadLine();
-                                                var message = new Message();
+                                                while (true)
+                                                {
+                                                    try
+                                                    {
+                                                        Console.WriteLine("Введите email получателя: ");
+                                                        string R_email = Console.ReadLine();
+                                                        Console.WriteLine("Введите сообщение: ");
+                                                        string messageContent = Console.ReadLine();
+                                                        var message = new Message(messageContent, R_email, user);   
+                                                        messageService.SendMessage(message);
+                                                        Console.WriteLine("Сообщение отправлено.");
+                                                        Console.WriteLine();
+                                                        break;
+                                                    }
+                                                    catch (MessageLengthExceededException)
+                                                    {
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.WriteLine("Длина сообщения больше 5000 символов!");
+                                                        Console.ForegroundColor = ConsoleColor.White;
+                                                    }
+                                                    catch (WrongEmailException)
+                                                    {
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.WriteLine("Неверный email!");
+                                                        Console.ForegroundColor = ConsoleColor.White;
+                                                    }
+                                                    
+                                                    
+                                                }
                                                 break;
                                             }
 
@@ -113,6 +143,18 @@ namespace SocialNetwork
                                 Console.ForegroundColor = ConsoleColor.White;
                             }
 
+                            catch (MessageLengthExceededException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Длина сообщения больше 5000 символов!");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            catch (WrongEmailException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Неверный email!");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
                             break;
                         }
 

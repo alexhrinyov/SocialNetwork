@@ -16,10 +16,10 @@ namespace SocialNetwork.BLL.Services
     {
         IMessageRepository messageRepository;
         IUserRepository userRepository;
-        public MessageService(IMessageRepository messageRepository, IUserRepository userRepository)
+        public MessageService()
         {
-            this.messageRepository = messageRepository;
-            this.userRepository = userRepository;
+            this.messageRepository = new MessageRepository();
+            this.userRepository = new UserRepository();
         }
 
         public void SendMessage(Message message)
@@ -39,6 +39,7 @@ namespace SocialNetwork.BLL.Services
                 recipient_id = message.recipient_id,
                 sender_id = message.sender_id
             };
+           
             if (messageRepository.Create(messageEntity) == 0)
                 throw new Exception();
 
