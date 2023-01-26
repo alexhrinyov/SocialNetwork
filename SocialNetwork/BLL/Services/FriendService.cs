@@ -53,9 +53,9 @@ namespace SocialNetwork.BLL.Services
         public IEnumerable<Friend> GetUsersFriends(int userId)
         {
             List<Friend> friends = new List<Friend>();
-            if (userRepository.FindById(userId) is null)
-                throw new UserNotFoundException();
 
+            if (friendRepository.FindAllByUserId(userId).ToList() is null)
+                throw new ArgumentNullException();
             friendRepository.FindAllByUserId(userId).ToList().ForEach(act =>
             {
 
