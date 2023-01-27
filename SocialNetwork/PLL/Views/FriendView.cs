@@ -28,6 +28,7 @@ namespace SocialNetwork.PLL.Views
             {
                 Console.WriteLine("Чтобы добавить пользователя в друзья, введите 1.");
                 Console.WriteLine("Чтобы посмотреть список своих друзей, введите 2.");
+                Console.WriteLine("Чтобы удалить пользователя из друзей, введите 3.");
                 Console.WriteLine("Чтобы вернуться в пользовательское меню, введите 0.");
                 string? key = Console.ReadLine();
                 if (key == "0")
@@ -66,7 +67,7 @@ namespace SocialNetwork.PLL.Views
                             foreach (Friend friend in friends)
                             {
                                 
-                                var friendEntity =  userRepository.FindById(friend.Id);
+                                var friendEntity =  userRepository.FindById(friend.Friend_id);
                                 Console.WriteLine(friendEntity.firstname + " " + friendEntity.lastname);
                             }
                         }
@@ -75,9 +76,28 @@ namespace SocialNetwork.PLL.Views
                             AlertMessage.Show("У вас нет дузей! Наверно, просто у вас нет зависимости от соц.сетей!");
                         }
                         break ;
-                    
-                        
-                        
+                    case "3":
+                        try
+                        {
+
+                            FriendAddingData friendAddingData = new FriendAddingData();
+                            Console.WriteLine("Введите email дружка, которого хотите удалить: ");
+                            friendAddingData.FriendEmail = Console.ReadLine();
+                            friendAddingData.UserId = user.Id;
+                            friendService.DeleteFriend(friendAddingData, user.Id);
+                            SuccessMessage.Show("Вы только что удалили дружка, сочувствуем!");
+                        }
+                        catch (ArgumentNullException)
+                        {
+                            AlertMessage.Show("У вас нет такого дружка!");
+                        }
+                        catch (Exception)
+                        {
+                            AlertMessage.Show("Ой! Что-то пошло не так!");
+                        }
+                        break;
+
+
                 }
 
             }

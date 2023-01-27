@@ -14,6 +14,12 @@ namespace SocialNetwork.DAL.Repositories
             return Query<FriendEntity>(@"select * from friends where user_id = :user_id", new { user_id = userId });
         }
 
+        public FriendEntity FindByFriendsId(int friendId, int userId)
+        {
+            return QueryFirstOrDefault<FriendEntity>("select * from friends where (friend_id = :friendId_p) and user_id = :userId_p", new { friendId_p = friendId, userId_p = userId });
+        }
+
+        
         public int Create(FriendEntity friendEntity)
         {
             return Execute(@"insert into friends (user_id,friend_id) values (:user_id,:friend_id)", friendEntity);

@@ -12,5 +12,12 @@ namespace SocialNetwork.DAL.Repositories
         int Create(FriendEntity friendEntity);
         IEnumerable<FriendEntity> FindAllByUserId(int userId);
         int Delete(int id);
+        /// <summary>
+        /// Поиск сущности друга по его и своему пользовательскому id
+        /// </summary>
+        /// <param name="friendId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public FriendEntity FindByFriendsId(int friendId, int userId);
     }
 }
