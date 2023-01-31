@@ -84,7 +84,7 @@ namespace SocialNetwork.PLL.Views
                             Console.WriteLine("Введите email дружка, которого хотите удалить: ");
                             friendAddingData.FriendEmail = Console.ReadLine();
                             friendAddingData.UserId = user.Id;
-                            friendService.DeleteFriend(friendAddingData, user.Id);
+                            friendService.DeleteFriend(friendAddingData);
                             SuccessMessage.Show("Вы только что удалили дружка, сочувствуем!");
                         }
                         catch (ArgumentNullException)

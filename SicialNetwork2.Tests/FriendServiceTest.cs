@@ -1,19 +1,24 @@
-﻿using NUnit.Framework;
-using SocialNetwork.BLL.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NUnit.Framework;
+using SocialNetwork.BLL;
 using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
-using SocialNetwork.DAL.Entities;
+using SocialNetwork.DAL;
 using SocialNetwork.DAL.Repositories;
 
-namespace SocialNetwork.Tests
+namespace SicialNetwork2.Tests
 {
     [TestFixture]
-    public class FriendServiceTests
+    public class FriendServiceTest
     {
         UserRepository? UserRepository;
         FriendService? FriendService;
         FriendRepository? FriendRepository;
-        
+
         [Test]
         public void DeleteFriendMustDeleteFriend()
         {
@@ -42,6 +47,6 @@ namespace SocialNetwork.Tests
             Assert.Throws<ArgumentNullException>(() => FriendService.DeleteFriend(friendAddingData));
         }
 
-        
+
     }
 }

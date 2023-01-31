@@ -33,7 +33,7 @@ namespace SocialNetwork.BLL.Services
             if (String.IsNullOrEmpty(friendAddingData.FriendEmail))
                 throw new ArgumentNullException();
 
-            var findUserEntity = this.userRepository.FindByEmail(friendAddingData.FriendEmail);
+            var findUserEntity = userRepository.FindByEmail(friendAddingData.FriendEmail);
             if (findUserEntity is null) throw new UserNotFoundException();
             var friendEntity = new FriendEntity()
             {
@@ -82,13 +82,13 @@ namespace SocialNetwork.BLL.Services
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="UserNotFoundException"></exception>
         /// <exception cref="Exception"></exception>
-        public void DeleteFriend(FriendAddingData friendAddingData, int userId)
+        public void DeleteFriend(FriendAddingData friendAddingData)
         {
             if (String.IsNullOrEmpty(friendAddingData.FriendEmail))
                 throw new ArgumentNullException();
             var findUserEntity = this.userRepository.FindByEmail(friendAddingData.FriendEmail);
             if (findUserEntity is null) throw new UserNotFoundException();
-            FriendEntity friendEntity = friendRepository.FindByFriendsId(findUserEntity.id, userId);
+            FriendEntity friendEntity = friendRepository.FindByFriendsId(findUserEntity.id, friendAddingData.UserId);
             if (this.friendRepository.Delete(friendEntity.id) == 0)
                 throw new Exception();
         }
